@@ -14,7 +14,7 @@ defmodule ShopAPI.Projections.CartItem do
     field(:quantity_requested, :integer)
   end
 
-  def add_new_item_changeset(cart_item_params) do
+  def add_item_changeset(cart_item_params) do
     %__MODULE__{}
     |> cast(cart_item_params, [:quantity_requested, :store_item_id, :cart_id])
     |> validate_required([:quantity_requested, :store_item_id, :cart_id])

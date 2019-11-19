@@ -1,8 +1,9 @@
 defmodule ShopAPI.Router do
   use Commanded.Commands.Router
 
-  alias ShopAPI.Aggregates.CartItem
-  alias ShopAPI.Commands.AddNewCartItem
+  alias ShopAPI.Aggregates.{CartItem, StoreItem}
+  alias ShopAPI.Commands.{AddCartItem, PullFromStoreStock}
 
-  dispatch([AddNewCartItem], to: CartItem, identity: :cart_item_uuid)
+  dispatch([AddCartItem], to: CartItem, identity: :cart_item_uuid)
+  dispatch([PullFromStoreStock], to: StoreItem, identity: :store_item_uuid)
 end

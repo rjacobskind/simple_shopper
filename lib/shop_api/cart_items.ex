@@ -3,17 +3,19 @@ defmodule ShopAPI.CartItems do
   The context module for cart items
   """
   alias ShopAPI.Projections.CartItem
-  alias ShopAPI.Commands.AddNewCartItem
+  alias ShopAPI.Commands.AddCartItem
   alias ShopAPI.Router
 
-  def add_new_item(cart_item_params) do
-    changeset = CartItem.add_new_item_changeset(cart_item_params)
+  def add_item(cart_item_params) do
+    changeset = CartItem.add_item_changeset(cart_item_params)
 
     if changeset.valid? do
-      cart_item_uuid = UUID.uuid4()
+      stock_transfer_uuid = UUID.uuid4()
+      cart_item_uuid = get_cart_item_uuid(cart_item_params)
 
       dispatch_result =
-        %AddNewCartItem{
+        %AddCartItem{
+          stock_transfer_uuid: stock_transfer_uuid,
           cart_item_uuid: cart_item_uuid,
           store_item_uuid: changeset.changes.store_item_uuid,
           quantity_requested: changeset.changes.quantity_requested
@@ -35,4 +37,7 @@ defmodule ShopAPI.CartItems do
       {:validation_error, changeset}
     end
   end
+
+  defp get_cart_item_uuid(%{cart_item_uuid: cart_item_uuid}), do: cart_item_uuid
+  defp get_cart_item_uuid(_), do: UUID.uuid4()
 end
