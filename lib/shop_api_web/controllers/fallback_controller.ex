@@ -8,6 +8,14 @@ defmodule ShopAPIWeb.FallbackController do
     |> render(:"404")
   end
 
+  def call(conn, {:error, :insufficient_stock_available}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(ShopAPIWeb.ErrorView)
+    |> assign(:message, "Insufficient stock available in store")
+    |> render(:"422")
+  end
+
   def call(conn, {:validation_error, _changeset}) do
     conn
     |> put_status(:unprocessable_entity)

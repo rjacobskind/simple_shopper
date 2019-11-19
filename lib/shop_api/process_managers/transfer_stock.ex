@@ -20,19 +20,11 @@ defmodule ShopAPI.ProcessManagers.TransferStock do
     :status
   ])
 
-  def interested?(%AddCartItemRequested{
-        stock_transfer_uuid: stock_transfer_uuid,
-        store_item_uuid: store_item_uuid,
-        quantity_requested: quantity_requested
-      }) do
-    store_item = Repo.get(StoreItem, store_item_uuid)
-
-    if quantity_requested <= store_item.quantity_in_stock do
-      {:start!, stock_transfer_uuid}
-    else
-      false
-    end
+  def interested?(%AddCartItemRequested{stock_transfer_uuid: stock_transfer_uuid}) do
+    {:start!, stock_transfer_uuid}
   end
+
+  def interested?(%AddCartItemRequested{}), do: false
 
   def handle(
         %TransferStock{},
