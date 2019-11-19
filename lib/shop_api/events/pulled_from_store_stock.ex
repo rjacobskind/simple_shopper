@@ -4,5 +4,5 @@ defmodule ShopAPI.Events.PulledFromStoreStock do
   """
   @derive [Jason.Encoder]
 
-  defstruct [:store_item_uuid, :new_quantity_in_stock]
+  defstruct [:stock_transfer_uuid, :store_item_uuid, :new_quantity_in_stock]
 end

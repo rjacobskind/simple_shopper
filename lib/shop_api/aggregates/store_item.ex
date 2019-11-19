@@ -11,6 +11,7 @@ defmodule ShopAPI.Aggregates.StoreItem do
   def execute(
         %StoreItem{uuid: store_item_uuid, quantity_in_stock: quantity_in_stock},
         %PullFromStoreStock{
+          stock_transfer_uuid: stock_transfer_uuid,
           quantity_requested: quantity_requested
         }
       ) do
@@ -19,7 +20,8 @@ defmodule ShopAPI.Aggregates.StoreItem do
 
       %PulledFromStoreStock{
         store_item_uuid: store_item_uuid,
-        new_quantity_in_stock: new_stock
+        new_quantity_in_stock: new_stock,
+        stock_transfer_uuid: stock_transfer_uuid
       }
     else
       {:error, :insufficient_stock_available}
