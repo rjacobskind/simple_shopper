@@ -24,11 +24,12 @@ defmodule ShopAPI.CartItems do
 
       case dispatch_result do
         :ok ->
-          %CartItem{
-            uuid: cart_item_uuid,
-            store_item_id: changeset.changes.store_item_id,
-            quantity_requested: changeset.changes.quantity_requested
-          }
+          {:ok,
+           %CartItem{
+             uuid: cart_item_uuid,
+             store_item_uuid: changeset.changes.store_item_uuid,
+             quantity_requested: changeset.changes.quantity_requested
+           }}
 
         reply ->
           reply

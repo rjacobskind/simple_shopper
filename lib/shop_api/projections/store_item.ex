@@ -8,6 +8,6 @@ defmodule ShopAPI.Projections.StoreItem do
 
   @primary_key {:uuid, :binary_id, autogenerate: false}
   schema "store_items" do
-    field(:quantity_in_stock, :integer)
+    field(:quantity_in_stock, :integer, default: 0)
   end
 end
