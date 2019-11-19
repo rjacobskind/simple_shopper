@@ -8,6 +8,6 @@ defmodule ShopAPIWeb.Router do
   scope "/api", ShopAPIWeb do
     pipe_through(:api)
 
-    resources("/cart", CartController, only[:create])
+    resources("/cart", CartController, only: [:create])
   end
 end
