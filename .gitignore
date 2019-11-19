@@ -35,4 +35,6 @@ shop_api-*.tar
 # variables.
 /config/*.secret.exs
 
+.elixir_ls/
+
 .tool-versions
