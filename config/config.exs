@@ -11,6 +11,9 @@ config :shop_api,
   namespace: ShopAPI,
   ecto_repos: [ShopAPI.Repo]
 
+config :commanded_ecto_projections,
+  repo: ShopAPI.Repo
+
 # Configures the endpoint
 config :shop_api, ShopAPIWeb.Endpoint,
   url: [host: "localhost"],

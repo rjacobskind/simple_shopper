@@ -17,7 +17,7 @@ defmodule ShopAPI.Projectors.StoreItem do
   # end)
 
   defp update_quantity_in_stock(multi, evt) do
-    with %StoreItem{} = store_item <- Repo.get(StoreItem, store_item_uuid) do
+    with %StoreItem{} = store_item <- Repo.get(StoreItem, evt.store_item_uuid) do
       Multi.update(
         multi,
         :store_item,
