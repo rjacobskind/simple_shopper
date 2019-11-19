@@ -6,7 +6,7 @@ defmodule ShopAPI.Projections.StoreItem do
 
   @type t :: %__MODULE__{}
 
-  @foreign_key_type :binary_id
+  @primary_key {:uuid, :binary_id, autogenerate: false}
   schema "store_items" do
     field(:quantity_in_stock, :integer)
   end
