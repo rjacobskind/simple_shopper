@@ -14,8 +14,9 @@ config :shop_api, ShopAPI.Repo,
   username: "postgres",
   password: "postgres",
   database: "shop_api_test",
-  hostname: "localhost",
-  # pool: Ecto.Adapters.SQL.Sandbox
+  hostname: "localhost"
+
+# pool: Ecto.Adapters.SQL.Sandbox
 
 config :commanded,
   event_store_adapter: Commanded.EventStore.Adapters.InMemory

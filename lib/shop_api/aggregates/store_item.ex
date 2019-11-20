@@ -28,13 +28,14 @@ defmodule ShopAPI.Aggregates.StoreItem do
     end
   end
 
-  def apply(%StoreItem{uuid: store_item_uuid} = store_item, %PulledFromStoreStock{
+  def apply(%StoreItem{} = store_item, %PulledFromStoreStock{
         store_item_uuid: store_item_uuid,
         new_quantity_in_stock: stock
       }) do
     %StoreItem{
       store_item
-      | quantity_in_stock: stock
+      | uuid: store_item_uuid,
+        quantity_in_stock: stock
     }
   end
 end
