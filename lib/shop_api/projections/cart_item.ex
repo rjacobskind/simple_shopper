@@ -12,6 +12,8 @@ defmodule ShopAPI.Projections.CartItem do
     field(:cart_uuid, :string)
     field(:store_item_uuid, :string)
     field(:quantity_requested, :integer)
+
+    timestamps()
   end
 
   def add_item_changeset(cart_item_params) do
