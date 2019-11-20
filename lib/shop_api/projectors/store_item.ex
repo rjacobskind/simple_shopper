@@ -12,10 +12,6 @@ defmodule ShopAPI.Projectors.StoreItem do
     update_quantity_in_stock(multi, evt)
   end)
 
-  # project(%AddToStoreStock{} = evt, _metadata, fn multi ->
-  #   update_quantity_in_stock(multi, evt)
-  # end)
-
   defp update_quantity_in_stock(multi, evt) do
     with %StoreItem{} = store_item <- Repo.get(StoreItem, evt.store_item_uuid) do
       Multi.update(

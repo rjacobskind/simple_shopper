@@ -1,9 +1,7 @@
 defmodule ShopAPI.ProcessManagers.TransferStock do
   alias __MODULE__
-  alias ShopAPI.Events.AddCartItemRequested
-  alias ShopAPI.Commands.PullFromStoreStock
-  alias ShopAPI.Events.PulledFromStoreStock
-  alias ShopAPI.Commands.AddToCart
+  alias ShopAPI.Events.{AddCartItemRequested, AddedToCart, PulledFromStoreStock}
+  alias ShopAPI.Commands.{AddToCart, PullFromStoreStock}
 
   use Commanded.ProcessManagers.ProcessManager,
     name: "ProcessManagers.TransferStock",
@@ -14,8 +12,6 @@ defmodule ShopAPI.ProcessManagers.TransferStock do
     :stock_transfer_uuid,
     :cart_item_uuid,
     :store_item_uuid,
-    # i.e. :add or :remove
-    :cart_update_type,
     :quantity_requested,
     :status
   ])
@@ -37,14 +33,14 @@ defmodule ShopAPI.ProcessManagers.TransferStock do
       }),
       do: {:continue!, stock_transfer_uuid}
 
-  # def interested?(%AddedToCart{stock_transfer_uuid: stock_transfer_uuid})
-  #     when is_nil(stock_transfer_uuid) do
-  #   false
-  # end
+  def interested?(%AddedToCart{stock_transfer_uuid: stock_transfer_uuid})
+      when is_nil(stock_transfer_uuid) do
+    false
+  end
 
-  # def interested?(%AddedToCart{stock_transfer_uuid: stock_transfer_uuid}) do
-  #   {:stop, stock_transfer_uuid}
-  # end
+  def interested?(%AddedToCart{stock_transfer_uuid: stock_transfer_uuid}) do
+    {:stop, stock_transfer_uuid}
+  end
 
   def interested?(_), do: false
 
@@ -88,7 +84,6 @@ defmodule ShopAPI.ProcessManagers.TransferStock do
       | stock_transfer_uuid: evt.stock_transfer_uuid,
         cart_item_uuid: evt.cart_item_uuid,
         store_item_uuid: evt.store_item_uuid,
-        cart_update_type: :add,
         quantity_requested: evt.quantity_requested,
         status: :pull_from_store_stock
     }
