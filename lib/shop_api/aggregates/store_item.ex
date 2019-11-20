@@ -12,6 +12,7 @@ defmodule ShopAPI.Aggregates.StoreItem do
         %StoreItem{uuid: store_item_uuid, quantity_in_stock: quantity_in_stock},
         %PullFromStoreStock{
           stock_transfer_uuid: stock_transfer_uuid,
+          store_item_uuid: store_item_uuid,
           quantity_requested: quantity_requested
         }
       ) do
