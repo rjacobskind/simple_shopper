@@ -1,11 +1,15 @@
-defmodule ShopAPIWeb.ShopControllerTest do
+defmodule ShopAPIWeb.CartControllerTest do
   use ShopAPIWeb.ConnCase
 
   @create_attrs %{
-    quantity: 2
+    quantity_requested: 2,
+    uuid: UUID.uuid4(),
+    store_item_uuid: UUID.uuid4(),
+    cart_uuid: Application.get_env(:shop_api, :default_cart_uuid)
   }
   @invalid_attrs %{
-    quantity: nil
+    quantity_requested: nil,
+    uuid: nil
   }
 
   setup %{conn: conn} do
