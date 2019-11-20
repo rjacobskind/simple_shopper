@@ -42,13 +42,3 @@ defmodule ShopApi.Aggregates.StoreItemTest do
              StoreItem.execute(%StoreItem{uuid: store_item_uuid, quantity_in_stock: 5}, command)
   end
 end
-
-# stock_transfer_uuid, :store_item_uuid, :new_quantity_in_stock]
-
-# execute(
-#         %StoreItem{uuid: store_item_uuid, quantity_in_stock: quantity_in_stock},
-#         %PullFromStoreStock{
-#           stock_transfer_uuid: stock_transfer_uuid,
-#           quantity_requested: quantity_requested
-#         }
-#       )

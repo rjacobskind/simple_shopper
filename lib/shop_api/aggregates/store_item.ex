@@ -5,6 +5,8 @@ defmodule ShopAPI.Aggregates.StoreItem do
   alias __MODULE__
   alias ShopAPI.Commands.PullFromStoreStock
   alias ShopAPI.Events.PulledFromStoreStock
+  alias ShopAPI.Projections.CartItem
+  alias ShopAPI.Repo
 
   defstruct [:uuid, :quantity_in_stock]
 
@@ -16,8 +18,16 @@ defmodule ShopAPI.Aggregates.StoreItem do
           quantity_requested: quantity_requested
         }
       ) do
-    if quantity_in_stock >= quantity_requested do
-      new_stock = quantity_in_stock - quantity_requested
+    cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+
+    existing_cart_item =
+      Repo.get_by(CartItem, cart_uuid: cart_uuid, store_item_uuid: store_item_uuid)
+
+    existing_cart_quantity = get_existing_cart_quantity(existing_cart_item)
+    quantity_available = quantity_in_stock + existing_cart_quantity
+
+    if quantity_available >= quantity_requested do
+      new_stock = quantity_available - quantity_requested
 
       %PulledFromStoreStock{
         store_item_uuid: store_item_uuid,
@@ -39,4 +49,7 @@ defmodule ShopAPI.Aggregates.StoreItem do
         quantity_in_stock: stock
     }
   end
+
+  defp get_existing_cart_quantity(nil), do: 0
+  defp get_existing_cart_quantity(existing_cart_item), do: existing_cart_item.quantity_requested
 end

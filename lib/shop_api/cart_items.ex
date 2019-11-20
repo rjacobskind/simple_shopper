@@ -3,7 +3,7 @@ defmodule ShopAPI.CartItems do
   The context module for cart items
   """
   alias ShopAPI.Projections.CartItem
-  alias ShopAPI.Commands.AddCartItem
+  alias ShopAPI.Commands.RequestAddCartItem
   alias ShopAPI.Router
 
   def add_item(cart_item_params) do
@@ -14,7 +14,7 @@ defmodule ShopAPI.CartItems do
       cart_item_uuid = get_cart_item_uuid(cart_item_params)
 
       dispatch_result =
-        %AddCartItem{
+        %RequestAddCartItem{
           stock_transfer_uuid: stock_transfer_uuid,
           cart_item_uuid: cart_item_uuid,
           store_item_uuid: changeset.changes.store_item_uuid,

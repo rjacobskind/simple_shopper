@@ -4,5 +4,5 @@ defmodule ShopAPI.Events.AddedToCart do
   """
   @derive [Jason.Encoder]
 
-  defstruct [:stock_transfer_uuid, :cart_item_uuid, :new_cart_quantity]
+  defstruct [:stock_transfer_uuid, :cart_item_uuid, :new_cart_quantity, :store_item_uuid]
 end
