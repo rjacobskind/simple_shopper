@@ -6,14 +6,16 @@ defmodule ShopAPI.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
-      ShopAPI.Repo,
+      supervisor(ShopAPI.Repo, []),
       # Start the endpoint when the application starts
-      ShopAPIWeb.Endpoint
+      supervisor(ShopAPIWeb.Endpoint, []),
       # Starts a worker by calling: ShopAPI.Worker.start_link(arg)
       # {ShopAPI.Worker, arg},
+      supervisor(ShopAPI.Supervisor, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

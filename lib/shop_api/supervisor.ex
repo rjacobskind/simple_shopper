@@ -9,7 +9,8 @@ defmodule ShopAPI.Supervisor do
 
   def init(_arg) do
     children = [
-      worker(Projectors.StoreItem, [], id: :store_item)
+      worker(Projectors.StoreItem, [], id: :store_item),
+      worker(Projectors.CartItem, [], id: :cart_item)
     ]
 
     supervise(children, strategy: :one_for_one)
