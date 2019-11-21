@@ -3,8 +3,6 @@ defmodule ShopAPIWeb.CartView do
   alias __MODULE__
 
   def render("show.json", %{cart_item: cart_item}) do
-    require IEx
-    IEx.pry()
     %{data: render_one(cart_item, CartView, "cart_item.json", as: :cart_item)}
   end
 
