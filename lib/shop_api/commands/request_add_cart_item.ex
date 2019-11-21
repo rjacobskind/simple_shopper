@@ -1,7 +1,7 @@
-defmodule ShopAPI.Commands.PullFromStoreStock do
-  @enforce_keys [:store_item_uuid]
+defmodule ShopAPI.Commands.RequestAddCartItem do
+  @enforce_keys [:cart_item_uuid]
   @uuid_regex ~r/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
-  defstruct [:stock_transfer_uuid, :store_item_uuid, :quantity_requested]
+  defstruct [:stock_transfer_uuid, :cart_item_uuid, :store_item_uuid, :quantity_requested]
 
   def valid?(command) do
     Skooma.valid?(Map.from_struct(command), schema())
@@ -10,6 +10,7 @@ defmodule ShopAPI.Commands.PullFromStoreStock do
   defp schema do
     %{
       stock_transfer_uuid: [:string, Skooma.Validators.regex(@uuid_regex)],
+      cart_item_uuid: [:string, Skooma.Validators.regex(@uuid_regex)],
       store_item_uuid: [:string, Skooma.Validators.regex(@uuid_regex)],
       quantity_requested: [:int, &positive_integer(&1)]
     }
