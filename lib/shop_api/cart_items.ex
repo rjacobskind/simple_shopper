@@ -20,7 +20,7 @@ defmodule ShopAPI.CartItems do
           store_item_uuid: changeset.changes.store_item_uuid,
           quantity_requested: changeset.changes.quantity_requested
         }
-        |> Router.dispatch()
+        |> Router.dispatch(consistency: :strong)
 
       case dispatch_result do
         :ok ->
