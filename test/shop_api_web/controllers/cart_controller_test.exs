@@ -1,5 +1,6 @@
 defmodule ShopAPIWeb.CartControllerTest do
   use ShopAPIWeb.ConnCase
+  use ShopAPI.Test.InMemoryEventStoreCase
 
   @create_attrs %{
     quantity_requested: 2,
