@@ -7,7 +7,7 @@ defmodule ShopAPI.CartItems do
   alias ShopAPI.Router
 
   def add_item(cart_item_params) do
-    changeset = CartItem.add_item_changeset(cart_item_params)
+    changeset = CartItem.changeset(cart_item_params)
 
     if changeset.valid? do
       stock_transfer_uuid = UUID.uuid4()

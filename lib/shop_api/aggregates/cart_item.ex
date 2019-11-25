@@ -33,16 +33,11 @@ defmodule ShopAPI.Aggregates.CartItem do
   end
 
   def execute(%CartItem{}, %AddToCart{
-        cart_uuid: cart_uuid,
+        cart_item_uuid: cart_item_uuid,
         stock_transfer_uuid: stock_transfer_uuid,
         quantity_requested: quantity_requested,
         store_item_uuid: store_item_uuid
       }) do
-    existing_cart_item =
-      Repo.get_by(CartItemProjection, cart_uuid: cart_uuid, store_item_uuid: store_item_uuid)
-
-    cart_item_uuid = get_cart_item_uuid(existing_cart_item)
-
     %AddedToCart{
       cart_item_uuid: cart_item_uuid,
       new_cart_quantity: quantity_requested,
@@ -63,7 +58,4 @@ defmodule ShopAPI.Aggregates.CartItem do
         store_item_uuid: evt.store_item_uuid
     }
   end
-
-  defp get_cart_item_uuid(nil), do: UUID.uuid4()
-  defp get_cart_item_uuid(existing_cart_item), do: existing_cart_item.uuid
 end

@@ -1,5 +1,5 @@
 defmodule ShopAPI.Commands.AddToCart do
-  @enforce_keys [:stock_transfer_uuid]
+  @enforce_keys [:cart_item_uuid]
   @uuid_regex ~r/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
   defstruct [
     :stock_transfer_uuid,

@@ -65,12 +65,14 @@ defmodule ShopApi.Aggregates.CartItemTest do
     store_item_uuid = UUID.uuid4()
     stock_transfer_uuid = UUID.uuid4()
     cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+    cart_item_uuid = UUID.uuid4()
 
     res =
       CartItem.execute(%CartItem{}, %AddToCart{
         store_item_uuid: store_item_uuid,
         quantity_requested: 3,
         cart_uuid: cart_uuid,
+        cart_item_uuid: cart_item_uuid,
         stock_transfer_uuid: stock_transfer_uuid
       })
 

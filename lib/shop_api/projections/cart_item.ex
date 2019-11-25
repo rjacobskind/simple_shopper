@@ -16,7 +16,7 @@ defmodule ShopAPI.Projections.CartItem do
     timestamps()
   end
 
-  def add_item_changeset(cart_item_params) do
+  def changeset(cart_item_params) do
     %__MODULE__{}
     |> cast(cart_item_params, [:uuid, :quantity_requested, :store_item_uuid, :cart_uuid])
     |> validate_required([:quantity_requested, :store_item_uuid, :cart_uuid])

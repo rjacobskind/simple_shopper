@@ -9,7 +9,7 @@ defmodule PullFromStoreStockTest do
 
   test "ensure %PulledFromStoreStock{} is published" do
     store_item_uuid = UUID.uuid4()
-    insert_store_item(store_item_uuid)
+    {:ok, original_store_item} = insert_store_item(store_item_uuid)
 
     :ok =
       Router.dispatch(
@@ -23,7 +23,12 @@ defmodule PullFromStoreStockTest do
     end)
 
     updated_store_item = Repo.get(StoreItem, store_item_uuid)
-    assert updated_store_item.quantity_in_stock == 8
+
+    Process.sleep(500)
+    assert updated_store_item.quantity_in_stock == original_store_item.quantity_in_stock - 2
+
+    # IO.inspect(original_store_item, label: "Original Store Item:\n\n")
+    # IO.inspect(updated_store_item, label: "Updated Store Item:\n\n")
   end
 
   defp insert_store_item(uuid) do
