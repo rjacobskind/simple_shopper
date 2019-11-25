@@ -1,4 +1,4 @@
-defmodule PullFromStoreStockText do
+defmodule PullFromStoreStockTest do
   use ShopAPI.Test.InMemoryEventStoreCase
   import Commanded.Assertions.EventAssertions
   alias ShopAPI.Router
@@ -17,10 +17,13 @@ defmodule PullFromStoreStockText do
         consistency: :strong
       )
 
-    assert_receive_event(ShopAPI, PulledFromStoreStock, fn event ->
-      require IEx
-      IEx.pry()
+    assert_receive_event(PulledFromStoreStock, fn event ->
+      assert event.new_quantity_in_stock == 8
+      assert event.store_item_uuid == store_item_uuid
     end)
+
+    updated_store_item = Repo.get(StoreItem, store_item_uuid)
+    assert updated_store_item.quantity_in_stock == 8
   end
 
   defp insert_store_item(uuid) do

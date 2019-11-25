@@ -30,7 +30,8 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :commanded,
-  event_store_adapter: Commanded.EventStore.Adapters.EventStore
+  event_store_adapter: Commanded.EventStore.Adapters.EventStore,
+  default_consistency: :strong
 
 config :shop_api, default_cart_uuid: "123"
 
