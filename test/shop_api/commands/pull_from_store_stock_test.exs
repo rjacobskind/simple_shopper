@@ -24,7 +24,6 @@ defmodule PullFromStoreStockTest do
 
     updated_store_item = Repo.get(StoreItem, store_item_uuid)
 
-    Process.sleep(500)
     assert updated_store_item.quantity_in_stock == original_store_item.quantity_in_stock - 2
 
     # IO.inspect(original_store_item, label: "Original Store Item:\n\n")

@@ -9,7 +9,7 @@ defmodule ShopAPIWeb.CartView do
   def render("cart_item.json", %{cart_item: cart_item}) do
     %{
       uuid: cart_item.uuid,
-      cart_uuid: cart_item.cart_uuid,
+      cart_id: cart_item.cart_id,
       store_item_uuid: cart_item.store_item_uuid,
       quantity_requested: cart_item.quantity_requested
     }

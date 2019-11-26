@@ -10,12 +10,10 @@ defmodule ShopAPI.CartItems do
     changeset = CartItem.changeset(cart_item_params)
 
     if changeset.valid? do
-      stock_transfer_uuid = UUID.uuid4()
       cart_item_uuid = get_cart_item_uuid(cart_item_params)
 
       dispatch_result =
         %RequestAddCartItem{
-          stock_transfer_uuid: stock_transfer_uuid,
           cart_item_uuid: cart_item_uuid,
           store_item_uuid: changeset.changes.store_item_uuid,
           quantity_requested: changeset.changes.quantity_requested

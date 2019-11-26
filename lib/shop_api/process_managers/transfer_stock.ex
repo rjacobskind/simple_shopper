@@ -1,4 +1,5 @@
 defmodule ShopAPI.ProcessManagers.TransferStock do
+  require Logger
   alias __MODULE__
   alias ShopAPI.Events.{AddCartItemRequested, AddedToCart, PulledFromStoreStock}
   alias ShopAPI.Commands.{AddToCart, PullFromStoreStock}
@@ -16,25 +17,20 @@ defmodule ShopAPI.ProcessManagers.TransferStock do
     :status
   ])
 
-  def interested?(%AddCartItemRequested{stock_transfer_uuid: stock_transfer_uuid})
-      when is_nil(stock_transfer_uuid),
-      do: false
+  def interested?(%AddCartItemRequested{stock_transfer_uuid: nil}), do: false
 
   def interested?(%AddCartItemRequested{stock_transfer_uuid: stock_transfer_uuid}) do
     {:start!, stock_transfer_uuid}
   end
 
-  def interested?(%PulledFromStoreStock{stock_transfer_uuid: stock_transfer_uuid})
-      when is_nil(stock_transfer_uuid),
-      do: false
+  def interested?(%PulledFromStoreStock{stock_transfer_uuid: nil}), do: false
 
   def interested?(%PulledFromStoreStock{
         stock_transfer_uuid: stock_transfer_uuid
       }),
       do: {:continue!, stock_transfer_uuid}
 
-  def interested?(%AddedToCart{stock_transfer_uuid: stock_transfer_uuid})
-      when is_nil(stock_transfer_uuid) do
+  def interested?(%AddedToCart{stock_transfer_uuid: nil}) do
     false
   end
 
@@ -94,5 +90,10 @@ defmodule ShopAPI.ProcessManagers.TransferStock do
       pm
       | status: :add_to_cart
     }
+  end
+
+  def error(error, _command_or_event, _failure_context) do
+    Logger.error(fn -> "#{__MODULE__} encountered an error: " <> inspect(error) end)
+    {:skip, error}
   end
 end

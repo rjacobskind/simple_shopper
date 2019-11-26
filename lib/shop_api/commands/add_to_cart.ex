@@ -6,7 +6,7 @@ defmodule ShopAPI.Commands.AddToCart do
     :store_item_uuid,
     :quantity_requested,
     :cart_item_uuid,
-    :cart_uuid
+    :cart_id
   ]
 
   def valid?(command) do
@@ -19,7 +19,7 @@ defmodule ShopAPI.Commands.AddToCart do
       store_item_uuid: [:string, Skooma.Validators.regex(@uuid_regex)],
       quantity_requested: [:int, &positive_integer(&1)],
       cart_item_uuid: [:string, Skooma.Validators.regex(@uuid_regex)],
-      cart_uuid: [:string, &(&1 == "123")]
+      cart_id: [:string, &(&1 == "123")]
     }
   end
 

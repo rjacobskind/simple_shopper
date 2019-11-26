@@ -9,7 +9,7 @@ defmodule ShopAPI.Projections.CartItem do
 
   @primary_key {:uuid, :binary_id, autogenerate: false}
   schema "cart_items" do
-    field(:cart_uuid, :string)
+    field(:cart_id, :string)
     field(:store_item_uuid, :string)
     field(:quantity_requested, :integer)
 
@@ -18,8 +18,8 @@ defmodule ShopAPI.Projections.CartItem do
 
   def changeset(cart_item_params) do
     %__MODULE__{}
-    |> cast(cart_item_params, [:uuid, :quantity_requested, :store_item_uuid, :cart_uuid])
-    |> validate_required([:quantity_requested, :store_item_uuid, :cart_uuid])
+    |> cast(cart_item_params, [:uuid, :quantity_requested, :store_item_uuid, :cart_id])
+    |> validate_required([:quantity_requested, :store_item_uuid, :cart_id])
     |> validate_number(:quantity_requested, greater_than: 0)
   end
 end

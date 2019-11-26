@@ -14,7 +14,7 @@ defmodule ShopAPIWeb.CartItemsTest do
   describe "add_item/1" do
     test "returns an :ok tuple with valid changeset params", %{store_item_uuid: store_item_uuid} do
       cart_item_params = %{
-        cart_uuid: Application.get_env(:shop_api, :default_cart_uuid),
+        cart_id: Application.get_env(:shop_api, :default_cart_id),
         store_item_uuid: store_item_uuid,
         quantity_requested: 2
       }
@@ -24,7 +24,7 @@ defmodule ShopAPIWeb.CartItemsTest do
 
     test "returns a validation error when missing a params", %{store_item_uuid: store_item_uuid} do
       cart_item_params = %{
-        cart_uuid: nil,
+        cart_id: nil,
         store_item_uuid: store_item_uuid,
         quantity_requested: 2
       }

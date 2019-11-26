@@ -19,7 +19,8 @@ config :shop_api, ShopAPI.Repo,
 # pool: Ecto.Adapters.SQL.Sandbox
 
 config :commanded,
-  event_store_adapter: Commanded.EventStore.Adapters.InMemory
+  event_store_adapter: Commanded.EventStore.Adapters.InMemory,
+  assert_receive_event_timeout: 2000
 
 config :commanded, Commanded.EventStore.Adapters.InMemory,
   serializer: Commanded.Serialization.JsonSerializer

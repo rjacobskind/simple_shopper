@@ -11,7 +11,7 @@ defmodule ShopAPI.Commands.AddToCartTest do
     store_item_uuid = UUID.uuid4()
     cart_item_uuid = UUID.uuid4()
 
-    cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+    cart_id = Application.get_env(:shop_api, :default_cart_id)
 
     {:ok, original_cart_item} = insert_cart_item(cart_item_uuid, store_item_uuid)
 
@@ -19,7 +19,7 @@ defmodule ShopAPI.Commands.AddToCartTest do
       Router.dispatch(
         %AddToCart{
           cart_item_uuid: cart_item_uuid,
-          cart_uuid: cart_uuid,
+          cart_id: cart_id,
           quantity_requested: 3,
           store_item_uuid: store_item_uuid
         },
@@ -31,7 +31,6 @@ defmodule ShopAPI.Commands.AddToCartTest do
       assert event.cart_item_uuid == cart_item_uuid
     end)
 
-    Process.sleep(500)
     updated_cart_item = Repo.get(CartItem, cart_item_uuid)
     assert original_cart_item.uuid == updated_cart_item.uuid
     assert original_cart_item.quantity_requested == updated_cart_item.quantity_requested
@@ -44,7 +43,7 @@ defmodule ShopAPI.Commands.AddToCartTest do
     store_item_uuid = UUID.uuid4()
     cart_item_uuid = UUID.uuid4()
 
-    cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+    cart_id = Application.get_env(:shop_api, :default_cart_id)
 
     original_cart_item = Repo.get(CartItem, cart_item_uuid)
 
@@ -52,7 +51,7 @@ defmodule ShopAPI.Commands.AddToCartTest do
       Router.dispatch(
         %AddToCart{
           cart_item_uuid: cart_item_uuid,
-          cart_uuid: cart_uuid,
+          cart_id: cart_id,
           quantity_requested: 3,
           store_item_uuid: store_item_uuid
         },
@@ -64,7 +63,6 @@ defmodule ShopAPI.Commands.AddToCartTest do
       assert event.cart_item_uuid == cart_item_uuid
     end)
 
-    Process.sleep(500)
     updated_cart_item = Repo.get(CartItem, cart_item_uuid)
     assert original_cart_item == nil
     assert updated_cart_item.quantity_requested == 3
@@ -74,11 +72,11 @@ defmodule ShopAPI.Commands.AddToCartTest do
   end
 
   defp insert_cart_item(uuid, store_item_uuid) do
-    cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+    cart_id = Application.get_env(:shop_api, :default_cart_id)
 
     params = %{
       uuid: uuid,
-      cart_uuid: cart_uuid,
+      cart_id: cart_id,
       store_item_uuid: store_item_uuid,
       quantity_requested: 1
     }

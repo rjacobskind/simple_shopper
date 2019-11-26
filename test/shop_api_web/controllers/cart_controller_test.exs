@@ -6,7 +6,7 @@ defmodule ShopAPIWeb.CartControllerTest do
     quantity_requested: 2,
     uuid: UUID.uuid4(),
     store_item_uuid: UUID.uuid4(),
-    cart_uuid: Application.get_env(:shop_api, :default_cart_uuid)
+    cart_id: Application.get_env(:shop_api, :default_cart_id)
   }
   @invalid_attrs %{
     quantity_requested: nil,

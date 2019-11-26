@@ -18,7 +18,7 @@ defmodule ShopAPI.Projectors.CartItem do
         )
     else
       nil ->
-        cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+        cart_id = Application.get_env(:shop_api, :default_cart_id)
 
         Multi.insert(
           multi,
@@ -27,7 +27,7 @@ defmodule ShopAPI.Projectors.CartItem do
             uuid: evt.cart_item_uuid,
             quantity_requested: evt.new_cart_quantity,
             store_item_uuid: evt.store_item_uuid,
-            cart_uuid: cart_uuid
+            cart_id: cart_id
           })
         )
 

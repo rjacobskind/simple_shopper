@@ -5,10 +5,8 @@ defmodule ShopAPI.Aggregates.CartItem do
   defstruct uuid: nil, store_item_uuid: nil, quantity: nil
 
   alias __MODULE__
-  alias ShopAPI.Projections.CartItem, as: CartItemProjection
   alias ShopAPI.Commands.{AddToCart, RequestAddCartItem}
   alias ShopAPI.Events.{AddCartItemRequested, AddedToCart}
-  alias ShopAPI.Repo
 
   def execute(%CartItem{}, %RequestAddCartItem{
         quantity_requested: quantity_requested
@@ -18,12 +16,13 @@ defmodule ShopAPI.Aggregates.CartItem do
   end
 
   def execute(%CartItem{}, %RequestAddCartItem{
-        stock_transfer_uuid: stock_transfer_uuid,
         cart_item_uuid: cart_item_uuid,
         store_item_uuid: store_item_uuid,
         quantity_requested: quantity_requested
       })
       when quantity_requested > 0 do
+    stock_transfer_uuid = UUID.uuid4()
+
     %AddCartItemRequested{
       stock_transfer_uuid: stock_transfer_uuid,
       cart_item_uuid: cart_item_uuid,

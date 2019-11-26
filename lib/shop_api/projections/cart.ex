@@ -6,7 +6,7 @@ defmodule ShopAPI.Projections.Cart do
 
   @type t :: %__MODULE__{}
 
-  @primary_key {:uuid, :binary_id, autogenerate: false}
+  @primary_key {:id, :binary_id, autogenerate: false}
   schema "carts" do
   end
 end

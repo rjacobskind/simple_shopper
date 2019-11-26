@@ -18,10 +18,9 @@ defmodule ShopAPI.Aggregates.StoreItem do
           quantity_requested: quantity_requested
         }
       ) do
-    cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+    cart_id = Application.get_env(:shop_api, :default_cart_id)
 
-    existing_cart_item =
-      Repo.get_by(CartItem, cart_uuid: cart_uuid, store_item_uuid: store_item_uuid)
+    existing_cart_item = Repo.get_by(CartItem, cart_id: cart_id, store_item_uuid: store_item_uuid)
 
     existing_cart_quantity = get_existing_cart_quantity(existing_cart_item)
     quantity_available = quantity_in_stock + existing_cart_quantity
@@ -44,12 +43,11 @@ defmodule ShopAPI.Aggregates.StoreItem do
         store_item_uuid: store_item_uuid,
         quantity_requested: quantity_requested
       }) do
-    cart_uuid = Application.get_env(:shop_api, :default_cart_uuid)
+    cart_id = Application.get_env(:shop_api, :default_cart_id)
     existing_store_item = Repo.get(ShopAPI.Projections.StoreItem, store_item_uuid)
     quantity_in_stock = get_quantity_in_stock(existing_store_item)
 
-    existing_cart_item =
-      Repo.get_by(CartItem, cart_uuid: cart_uuid, store_item_uuid: store_item_uuid)
+    existing_cart_item = Repo.get_by(CartItem, cart_id: cart_id, store_item_uuid: store_item_uuid)
 
     existing_cart_quantity = get_existing_cart_quantity(existing_cart_item)
     quantity_available = quantity_in_stock + existing_cart_quantity
