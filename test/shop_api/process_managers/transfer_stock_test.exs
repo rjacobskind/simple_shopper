@@ -5,7 +5,7 @@ defmodule ShopAPI.ProcessManagers.TransferStockTest do
   alias ShopAPI.Projections.{StoreItem, CartItem}
   alias ShopAPI.{Repo, Router}
 
-  test "results in 2 published events -- PulledFromStoreStock and AddedCartItem" do
+  test "results in 3 published events -- AddCartItemRequested, PulledFromStoreStock, and AddedCartItem" do
     cart_item_uuid = UUID.uuid4()
     store_item_uuid = UUID.uuid4()
     quantity_requested = 3
